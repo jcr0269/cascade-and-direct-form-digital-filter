@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import patches
+import scipy.signal as signal
 from matplotlib.figure import Figure
 from matplotlib import rcParams
 # from plot_zplane import zplane
+from math import pi
 
 
 def zplane(b, a, filename=None):
@@ -66,6 +68,14 @@ def zplane(b, a, filename=None):
 
     return z, p, k
 
+def frequencies(a, b, begin, end):
+    t = np.linspace(begin, end)
+    freq, h = signal.freqz(b, a, fs=2*pi)
+    plt.plot(h)
+    plt.show()
+    return freq
+
 b = np.array([1])
-a = np.array([1, 3.502, 5.026, -3.464, 0.979])
+a = np.array([1, -3.502, 5.026, -3.464, 0.979])
 zplane(b,a)
+freq = frequencies(a, b, begin=0, end=pi)
