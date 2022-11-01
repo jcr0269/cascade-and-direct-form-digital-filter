@@ -63,6 +63,7 @@ def zplane(b, a, filename=None):
     plt.yticks(ticks)
 
     if filename is None:
+        plt.title('Z pole plot')
         plt.show()
     else:
         plt.savefig(filename)
@@ -76,11 +77,12 @@ def impulse(a, b, begin, end):
     z = (freq * pi, 20 * np.log10(abs(h)))
     h = h/h.max()
     x = signal.filtfilt(b, a, h)
+    plt.title('Impulse Response')
     plt.plot(x)
     plt.show()
     return x
 
 b = np.array([1])
 a = np.array([1, -3.502, 5.026, -3.464, 0.979])
-zplane(b,a)
+zplane(b, a)
 impulse(a, b, begin=0, end=100)
