@@ -6,6 +6,7 @@ from matplotlib.figure import Figure
 from matplotlib import rcParams
 # from plot_zplane import zplane
 from math import pi
+import filtercascade
 
 
 def zplane(b, a, filename=None):
@@ -68,14 +69,18 @@ def zplane(b, a, filename=None):
 
     return z, p, k
 
-def frequencies(a, b, begin, end):
+def impulse(a, b, begin, end):
     t = np.linspace(begin, end)
-    freq, h = signal.freqz(b, a, fs=2*pi)
-    plt.plot(h)
+    freq, h = signal.freqz(b,a, fs=pi)
+    samp_freq = 1000
+    z = (freq * pi, 20 * np.log10(abs(h)))
+    h = h/h.max()
+    x = signal.filtfilt(b, a, h)
+    plt.plot(x)
     plt.show()
-    return freq
+    return x
 
 b = np.array([1])
 a = np.array([1, -3.502, 5.026, -3.464, 0.979])
 zplane(b,a)
-freq = frequencies(a, b, begin=0, end=pi)
+impulse(a, b, begin=0, end=100)
