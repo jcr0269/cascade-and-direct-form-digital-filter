@@ -77,17 +77,16 @@ def magnitude(a, b):
     plt.xlabel('Frequency')
     plt.ylabel('Magnitude')
     plt.show()
-def impulse(a, b, begin, end):
-    t = np.linspace(begin, end)
+
+def impulse(a, b):
     freq, h = signal.freqz(b,a, fs=pi)
-    samp_freq = 1000
-    z = (freq * pi, 20 * np.log10(abs(h)))
     h = h/h.max()
     x = signal.filtfilt(b, a, h)
     plt.title('Impulse Response')
     plt.plot(x)
     plt.show()
     return x
+
 def convolve(a, b):
     a4 = signal.convolve(a,b)
     return a4
@@ -99,12 +98,12 @@ a2 = np.array([1, -1.9, 0.99])
 a3 = np.array([1, -1.61, 0.99])
 a4 = convolve(a2,a3)
 
-zplane(b,a4)
+zplane(b, a4)
 zplane(b, a)
 zplane(b, a1)
-impulse(a1, b, begin=0, end=100)
-impulse(a, b, begin=0, end=100)
-impulse(a4, b, begin=0, end=100)
+impulse(a1, b)
+impulse(a, b)
+impulse(a4, b)
 magnitude(a, b)
 magnitude(a1,b)
 magnitude(a4,b)
