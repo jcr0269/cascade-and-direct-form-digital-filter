@@ -70,6 +70,13 @@ def zplane(b, a, filename=None):
 
     return z, p, k
 
+def magnitude(a, b):
+    w1, h1 = signal.freqz(b, a, fs=pi)
+    plt.plot(w1 /(2*np.pi), 20*np.log10(abs(h1)))
+    plt.title('Filter 1 Frequency Response')
+    plt.xlabel('Frequency')
+    plt.ylabel('Magnitude')
+    plt.show()
 def impulse(a, b, begin, end):
     t = np.linspace(begin, end)
     freq, h = signal.freqz(b,a, fs=pi)
@@ -81,8 +88,23 @@ def impulse(a, b, begin, end):
     plt.plot(x)
     plt.show()
     return x
+def convolve(a, b):
+    a4 = signal.convolve(a,b)
+    return a4
 
 b = np.array([1])
 a = np.array([1, -3.502, 5.026, -3.464, 0.979])
+a1 = np.array([1, -3.50, 5.03, -3.46, 0.98])
+a2 = np.array([1, -1.9, 0.99])
+a3 = np.array([1, -1.61, 0.99])
+a4 = convolve(a2,a3)
+
+zplane(b,a4)
 zplane(b, a)
+zplane(b, a1)
+impulse(a1, b, begin=0, end=100)
 impulse(a, b, begin=0, end=100)
+impulse(a4, b, begin=0, end=100)
+magnitude(a, b)
+magnitude(a1,b)
+magnitude(a4,b)
